@@ -1,0 +1,95 @@
+﻿@{
+    ViewBag.Title = "期末作業";
+    Layout = null;
+}
+
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <title>期末作業</title>
+    <style>
+        table {
+            border-collapse: collapse;
+            width: 100%;
+            margin-bottom: 30px;
+        }
+
+        th, td {
+            border: 1px solid #ccc;
+            padding: 6px 10px;
+        }
+
+        th {
+            background-color: #e3e3e3;
+        }
+    </style>
+</head>
+<body>
+    <h2>查詢訂單</h2>
+    <form method="post">
+        <label>輸入訂單編號：</label>
+        <input type="number" name="salesOrderId" value="@ViewBag.InputOrderId" required />
+        <input type="submit" value="確定" />
+    </form>
+
+    @if (ViewBag.OrderHeader != null && ((System.Data.DataTable)ViewBag.OrderHeader).Rows.Count > 0)
+    {
+        <h3>訂單主檔</h3>
+        <table>
+            <tr>
+                @foreach (System.Data.DataColumn col in ((System.Data.DataTable)ViewBag.OrderHeader).Columns)
+                {
+                    <th>@col.ColumnName</th>
+                }
+            </tr>
+            @foreach (System.Data.DataRow row in ((System.Data.DataTable)ViewBag.OrderHeader).Rows)
+            {
+                <tr>
+                    @foreach (var item in row.ItemArray)
+                    {
+                        <td>@item</td>
+                    }
+                </tr>
+            }
+        </table>
+    }
+
+    @if (ViewBag.OrderDetail != null && ((System.Data.DataTable)ViewBag.OrderDetail).Rows.Count > 0)
+    {
+        <h3>訂單明細</h3>
+        <table>
+            <tr>
+                @foreach (System.Data.DataColumn col in ((System.Data.DataTable)ViewBag.OrderDetail).Columns)
+                {
+                    <th>@col.ColumnName</th>
+                }
+            </tr>
+            @foreach (System.Data.DataRow row in ((System.Data.DataTable)ViewBag.OrderDetail).Rows)
+            {
+                <tr>
+                    @foreach (var item in row.ItemArray)
+                    {
+                        <td>@item</td>
+                    }
+                </tr>
+            }
+        </table>
+    }
+
+    @if (ViewBag.CustomerList != null && ((System.Data.DataTable)ViewBag.CustomerList).Rows.Count > 0)
+    {
+        <h3>客戶清單</h3>
+        <table>
+            <tr><th>FullName</th></tr>
+            @foreach (System.Data.DataRow row in ((System.Data.DataTable)ViewBag.CustomerList).Rows)
+            {
+                <tr><td>@row["FullName"]</td></tr>
+            }
+        </table>
+    }
+</body>
+</html>
+
+
+
